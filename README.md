@@ -1,199 +1,199 @@
-SIN 392 - Projeto de Processamento de Imagens
-Descrição
-Este projeto é um sistema interativo para edição e análise de imagens, desenvolvido para a disciplina SIN 392 - Introdução ao Processamento Digital de Imagens da Universidade Federal de Viçosa, Campus Rio Paranaíba. O sistema possui uma interface gráfica (GUI) estilizada com a biblioteca ttkbootstrap e implementa funcionalidades de processamento de imagens em níveis de cinza, incluindo manipulação de histogramas, transformações de intensidade, filtros espaciais e no domínio da frequência, morfologia matemática e segmentação. As operações são aplicadas sequencialmente à imagem processada, permitindo a composição de múltiplas transformações.
-Pré-requisitos
-Para executar o sistema, você precisará do seguinte:
+# SIN 392 - Projeto de Processamento de Imagens
 
-Sistema Operacional: Windows, macOS ou Linux.
-Python: Versão 3.8 ou superior. Recomenda-se a versão mais recente (ex.: 3.11) para melhor compatibilidade.
-Gerenciador de Pacotes: pip (geralmente incluído com o Python).
-Bibliotecas Python:
-pillow: Para manipulação de imagens.
-numpy: Para operações numéricas.
-ttkbootstrap: Para estilização da interface gráfica.
-opencv-python: Para processamento de imagens.
-matplotlib: Para exibição de histogramas e espectro de Fourier.
-scipy: Para operações no domínio da frequência.
+## Descrição
 
-Git (opcional): Para clonar o repositório, se preferir baixá-lo via linha de comando.
-Espaço em Disco: Aproximadamente 500 MB para as dependências e o código-fonte.
-Memória RAM: Mínimo de 4 GB (recomenda-se 8 GB para imagens grandes).
+Este projeto é um sistema interativo para edição e análise de imagens, desenvolvido para a disciplina **SIN 392 - Introdução ao Processamento Digital de Imagens** da Universidade Federal de Viçosa, Campus Rio Paranaíba. O sistema possui uma interface gráfica (GUI) estilizada com a biblioteca `ttkbootstrap` e implementa funcionalidades de processamento de imagens em níveis de cinza, incluindo manipulação de histogramas, transformações de intensidade, filtros espaciais e no domínio da frequência, morfologia matemática e segmentação. As operações são aplicadas sequencialmente à imagem processada, permitindo a composição de múltiplas transformações.
 
-Configuração do Ambiente
+---
+
+## Pré-requisitos
+
+Para executar o sistema, você precisará dos seguintes itens:
+
+- **Sistema Operacional**: Windows, macOS ou Linux.
+- **Python**: Versão 3.8 ou superior (recomenda-se 3.11 para melhor compatibilidade).
+- **Gerenciador de Pacotes**: `pip` (geralmente incluído com o Python).
+- **Bibliotecas Python**:
+  - `pillow`: Manipulação de imagens.
+  - `numpy`: Operações numéricas.
+  - `ttkbootstrap`: Estilização da interface gráfica.
+  - `opencv-python`: Processamento de imagens.
+  - `matplotlib`: Exibição de histogramas e espectro de Fourier.
+  - `scipy`: Operações no domínio da frequência.
+- **Git** (opcional): Para clonar o repositório via linha de comando.
+- **Espaço em Disco**: Aproximadamente 500 MB para dependências e código-fonte.
+- **Memória RAM**: Mínimo de 4 GB (recomenda-se 8 GB para imagens grandes).
+
+---
+
+## Configuração do Ambiente
+
 Siga as etapas abaixo para configurar o ambiente necessário para executar o sistema.
 
-1. Instalar o Python
+### 1. Instalar o Python
 
-Verifique se o Python está instalado:Abra um terminal (Prompt de Comando no Windows, Terminal no macOS/Linux) e execute:python --version
+1. **Verifique se o Python está instalado**:
+   Abra um terminal (Prompt de Comando no Windows, Terminal no macOS/Linux) e execute:
 
-oupython3 --version
+   ```bash
+   python --version
+   ```
 
-Se a versão exibida for 3.8 ou superior, pule para o próximo passo. Caso contrário, siga as instruções abaixo.
-Baixe e instale o Python:
-Acesse python.org e baixe a versão mais recente.
-Durante a instalação no Windows, marque a opção "Add Python to PATH" para facilitar o uso no terminal.
-Após a instalação, verifique novamente a versão com o comando acima.
+   ou
 
-2. Clonar ou Baixar o Repositório
+   ```bash
+   python3 --version
+   ```
 
-Opção 1: Clonar via Git:
-Instale o Git em git-scm.com se ainda não tiver.
-Abra o terminal e execute:git clone https://github.com/Gush4M/Interface-PDI.git
+   Se a versão exibida for 3.8 ou superior, vá para o próximo passo. Caso contrário, siga as instruções abaixo.
 
-Opção 2: Baixar manualmente:
-Acesse o repositório no GitHub, clique em "Code" e selecione "Download ZIP".
-Extraia o arquivo ZIP para uma pasta de sua escolha e abra a pasta extraída no terminal:cd caminho/para/a_pasta
+2. **Baixe e instale o Python**:
+   - Acesse [python.org](https://www.python.org/downloads/) e baixe a versão mais recente.
+   - **Windows**: Durante a instalação, marque a opção "Add Python to PATH" para facilitar o uso no terminal.
+   - Após a instalação, verifique novamente a versão com o comando acima.
 
-3. Criar um Ambiente Virtual (Recomendado)
+### 2. Clonar ou Baixar o Repositório
 
-Crie um ambiente virtual para isolar as dependências:python -m venv venv
+- **Opção 1: Clonar via Git**:
 
-Ative o ambiente virtual:
-Windows: .\venv\Scripts\activate
+  1. Instale o Git em [git-scm.com](https://git-scm.com/downloads) se ainda não tiver.
+  2. Abra o terminal e execute:
+     ```bash
+     git clone https://github.com/Gush4M/Interface-PDI.git
+     ```
+  3. Navegue até o diretório do projeto:
+     ```bash
+     cd Interface-PDI
+     ```
 
-macOS/Linux: source venv/bin/activate
+- **Opção 2: Baixar manualmente**:
+  1. Acesse o repositório no GitHub, clique em "Code" e selecione "Download ZIP".
+  2. Extraia o arquivo ZIP para uma pasta de sua escolha.
+  3. Abra o terminal e navegue até a pasta extraída:
+     ```bash
+     cd caminho/para/a-pasta
+     ```
 
-Você verá (venv) no início da linha de comando, indicando que o ambiente está ativado.
+### 3. Criar um Ambiente Virtual (Recomendado)
 
-4. Instalar Dependências\*\*
+1. Crie um ambiente virtual para isolar as dependências:
 
-Com o ambiente virtual ativado, instale as bibliotecas necessárias usando o pip:pip install pillow numpy ttkbootstrap opencv-python matplotlib scipy
+   ```bash
+   python -m venv venv
+   ```
 
-Verifique a instalação:Execute:pip list
+2. Ative o ambiente virtual:
+   - **Windows**:
+     ```bash
+     .\venv\Scripts\activate
+     ```
+   - **macOS/Linux**:
+     ```bash
+     source venv/bin/activate
+     ```
+     Após ativar, você verá `(venv)` no início da linha de comando.
 
-Confirme que as bibliotecas listadas incluem pillow, numpy, ttkbootstrap, opencv-python, matplotlib, scipy, e tkinter.
+### 4. Instalar Dependências
 
-5. Verificar o Arquivo do Projeto
+1. Com o ambiente virtual ativado, instale as bibliotecas necessárias:
 
-Certifique-se de que o arquivo src/main.py está presente no diretório do projeto. Este é o arquivo principal que executa o sistema.
+   ```bash
+   pip install pillow numpy ttkbootstrap opencv-python matplotlib scipy
+   ```
 
-Execução do Sistema
+2. **Verifique a instalação**:
+   Execute:
+   ```bash
+   pip list
+   ```
+   Confirme que as bibliotecas listadas incluem `pillow`, `numpy`, `ttkbootstrap`, `opencv-python`, `matplotlib`, `scipy` e `tkinter`.
+
+### 5. Verificar o Arquivo do Projeto
+
+- Certifique-se de que o arquivo `image_processing_gui.py` está presente no diretório do projeto. Este é o arquivo principal que executa o sistema.
+
+---
+
+## Execução do Sistema
+
 Após configurar o ambiente, siga estas etapas para executar o programa:
 
-Navegue até o diretório do projeto (se ainda não estiver lá):
-cd caminho/para/a-pasta
+1. **Navegue até o diretório do projeto**:
 
-Ative o ambiente virtual (se não estiver ativado):
+   ```bash
+   cd caminho/para/a-pasta
+   ```
 
-Windows:.\venv\Scripts\activate
+2. **Ative o ambiente virtual** (se não estiver ativado):
 
-macOS/Linux:source venv/bin/activate
+   - Windows:
+     ```bash
+     .\venv\Scripts\activate
+     ```
+   - macOS/Linux:
+     ```bash
+     source venv/bin/activate
+     ```
 
-Execute o programa:
-python src/main.py
+3. **Execute o programa**:
 
-Interaja com o Sistema:
+   ```bash
+   python image_processing_gui.py
+   ```
 
-A interface gráfica será aberta.
-No menu "Arquivo", selecione "Carregar uma imagem"` para abrir um arquivo de imagem (formatos suportados: PNG, JPG, JPEG, BMP).
-Use os botões no painel de funcionalidades para aplicar operações de processamento.
-Salve a imagem processada pelo menu "Arquivo" > "Salvar Imagem".
-O status da operação será exibido na barra de status abaixo do painel de botões.
+4. **Interaja com o Sistema**:
+   - A interface gráfica será aberta.
+   - No menu **Arquivo**, selecione **Carregar Imagem** para abrir um arquivo de imagem (formatos suportados: PNG, JPG, JPEG, BMP).
+   - Use os botões no painel de funcionalidades para aplicar operações de processamento.
+   - Salve a imagem processada pelo menu **Arquivo** > **Salvar Imagem**.
+   - O status da operação será exibido na barra de status abaixo do painel de botões.
 
-Funcionalidades Implementadas
+---
 
-Carregar Imagem: Suporta formatos PNG, JPG, JPEG e BMP. Imagens RGB são convertidas automaticamente para níveis de cinza.
-Salvar Imagem: Permite salvar a imagem processada em formato PNG ou JPG.
-Histograma: Exibe o histograma da imagem processada em uma janela Matplotlib.
-Transformações de Intensidade:
-Alargamento de Contraste: Normaliza a intensidade da imagem para a faixa [0, 255].
-Equalização de Histograma: Ajusta a distribuição de intensidades para melhorar o contraste.
+## Funcionalidades Implementadas
 
-Filtros Passa-Baixa:
-Média: Aplica um filtro de média 5x5.
-Mediana: Aplica um filtro de mediana 5x5.
-Gaussiano: Aplica um filtro gaussiano 5x5.
-Máximo: Aplica um filtro de máximo 3x3.
-Mínimo: Aplica um filtro de mínimo 3x3.
+| Funcionalidade                          | Descrição                                                                       |
+| --------------------------------------- | ------------------------------------------------------------------------------- |
+| **Carregar Imagem**                     | Suporta PNG, JPG, JPEG e BMP. Imagens RGB são convertidas para níveis de cinza. |
+| **Salvar Imagem**                       | Salva a imagem processada em PNG ou JPG.                                        |
+| **Histograma**                          | Exibe o histograma da imagem processada em uma janela Matplotlib.               |
+| **Alargamento de Contraste**            | Normaliza a intensidade para a faixa [0, 255].                                  |
+| **Equalização de Histograma**           | Ajusta a distribuição de intensidades para melhorar o contraste.                |
+| **Filtros Passa-Baixa**                 | Média (5x5), Mediana (5x5), Gaussiano (5x5), Máximo (3x3), Mínimo (3x3).        |
+| **Filtros Passa-Alta**                  | Laplaciano, Roberts, Prewitt, Sobel.                                            |
+| **Convolução no Domínio da Frequência** | Passa-Baixa e Passa-Alta com filtro circular.                                   |
+| **Espectro de Fourier**                 | Exibe o espectro de magnitude da Transformada de Fourier.                       |
+| **Morfologia Matemática**               | Erosão e Dilatação com kernel 3x3.                                              |
+| **Segmentação Otsu**                    | Aplica limiarização automática com o método de Otsu.                            |
+| **Interface Gráfica**                   | Estilizada com ttkbootstrap (tema "flatly"), com botões e status.               |
+| **Processamento Sequencial**            | Operações são aplicadas à imagem processada anteriormente.                      |
 
-Filtros Passa-Alta:
-Laplaciano: Detecta bordas usando o operador Laplaciano.
-Roberts: Detecta bordas usando máscaras de Roberts.
-Prewitt: Detecta bordas usando máscaras de Prewitt.
-Sobel: Detecta bordas usando máscaras de Sobel.
+---
 
-Convolução no Domínio da Frequência:
-Passa-Baixa: Aplica um filtro circular no domínio da frequência.
-Passa-Alta: Aplica um filtro circular complementar no domínio da frequência.
+## Estrutura do Repositório
 
-Espectro de Fourier: Exibe o espectro de magnitude da Transformada de Fourier da imagem processada.
-Morfologia Matemática:
-Erosão: Aplica erosão com um kernel 3x3.
-Dilatação: Aplica dilatação com um kernel 3x3.
+- `image_processing_gui.py`: Código principal da aplicação.
+- `README.md`: Instruções de configuração e execução.
 
-Segmentação: Aplica o método de Otsu para limiarização automática.
-Interface Gráfica: Interface estilizada com ttkbootstrap (tema "flatly"), com botões organizados, labels de status e área de imagem com borda.
-Processamento Sequencial: Cada filtro ou transformação é aplicado à imagem processada anteriormente, permitindo composição de operações.
+---
 
-Funcionalidades Pendentes
+## Como Usar
 
-(Opcional) Descritores de cor, textura e forma com métodos de agrupamento.
+1. Execute o programa com:
 
-Estrutura do Repositório
+   ```bash
+   python image_processing_gui.py
+   ```
 
-src/main.py: Código principal da aplicação.
-README.md: Instruções de configuração e execução.
+2. No menu **Arquivo**, selecione **Carregar Imagem** para abrir uma imagem.
+3. A imagem será exibida na área central com borda.
+4. Use os botões no painel de funcionalidades para aplicar operações. Cada operação é aplicada à imagem resultante da anterior.
+5. Salve a imagem processada com **Arquivo** > **Salvar Imagem**.
+6. Para reiniciar, carregue uma nova imagem.
+7. O status da operação é exibido abaixo do painel de botões.
 
-Solução de Problemas
-Aqui estão soluções para problemas comuns que podem ocorrer durante a configuração ou execução:
+---
 
-Erro: "Python não encontrado":
-Certifique-se de que o Python está instalado e adicionado ao PATH. Reinstale o Python e marque "Add Python to PATH" durante a instalação.
-Use python3 em vez de python em alguns sistemas Linux/macOS.
+## Contato
 
-Erro: "Módulo não encontrado" (ex.: "No module named 'cv2'"):
-Verifique se o ambiente virtual está ativado antes de executar o programa.
-Reinstale as dependências com:pip install pillow numpy ttkbootstrap opencv-python matplotlib scipy
-
-Certifique-se de que está usando o pip do ambiente virtual (execute pip --version para confirmar).
-
-Erro ao carregar imagens:
-Confirme que as imagens estão em formatos suportados (PNG, JPG, JPEG, BMP).
-Evite imagens corrompidas ou com tamanhos muito grandes (>2MB).
-
-Janela Matplotlib não aparece:
-Certifique-se de que matplotlib está instalado.
-Feche outras janelas abertas do Matplotlib antes de aplicar o histograma ou espectro de Fourier.
-
-Programa lento com imagens grandes:
-Redimensione as imagens para 512x512 ou 1024x1024 pixels usando um editor como GIMP ou Photoshop antes de carregar.
-
-Interface gráfica não aparece:
-Verifique se tkinter está instalado. No Ubuntu/Debian, instale com:sudo apt-get install python3-tk
-
-No Windows/macOS, tkinter geralmente vem com o Python.
-
-Se encontrar outros problemas, abra uma issue no repositório ou entre em contato com o desenvolvedor.
-Como Usar
-
-Execute o programa com:python src/main.py
-
-No menu "Arquivo", selecione "Carregar Imagem" para abrir uma imagem.
-A imagem será exibida na área central com borda.
-Use os botões no painel de funcionalidades para aplicar as operações de processamento. Cada operação é aplicada à imagem resultante da operação anterior.
-No menu "Arquivo", selecione "Salvar Imagem" para salvar a imagem processada.
-Para reiniciar o processamento, carregue uma nova imagem.
-O status da operação é exibido abaixo do painel de botões.
-
-Recomendações para Testes
-
-Imagens sugeridas:
-Lena, Cameraman, Barbara, Peppers, Moon (disponíveis em repositórios como USC-SIPI Image Database ou OpenCV samples).
-Imagens de alta resolução com bordas nítidas, texturas ou áreas homogêneas.
-
-Testes recomendados:
-Carregue uma imagem e aplique sequencialmente: Filtro Gaussiano, Filtro Sobel e Segmentação Otsu.
-Visualize o histograma antes e depois da Equalização de Histograma.
-Teste o Alargamento de Contraste com imagens de baixo contraste.
-
-Observações
-
-As imagens devem estar em níveis de cinza para processamento. Imagens RGB são convertidas automaticamente.
-O histograma e o espectro de Fourier são exibidos em janelas separadas do Matplotlib.
-Para imagens muito grandes, o processamento pode ser lento. Considere redimensioná-las.
-O programa foi testado em Windows 10 e Ubuntu 20.04, mas deve funcionar em outros sistemas com as dependências corretas.
-
-Contato
-Para dúvidas, sugestões ou relatórios de erros, entre em contato com ou abra uma issue no repositório GitHub.
-Licença
-Este projeto é para fins acadêmicos e está sob a licença MIT (a menos que especificado otherwise no repositório).
+Para dúvidas, sugestões ou relatórios de erros, entre em contato com `gustavo.reis@ufv.br` ou abra uma [issue](https://github.com/<seu-usuario>/<nome-do-repositorio>/issues) no GitHub.
