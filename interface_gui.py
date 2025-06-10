@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import filedialog, messagebox
+from tkinter import filedialog, messagebox, ttk
 import ttkbootstrap as ttkb
 from ttkbootstrap.constants import *
 from PIL import Image, ImageTk
@@ -104,7 +104,7 @@ class ImageProcessingApp:
     
     # Redimensiona a imagem para exibição
     def display_image(self,image):
-        max_size = (600,400)
+        max_size = (900,700)
         image.thumbnail(max_size, Image.Resampling.LANCZOS)
         self.photo = ImageTk.PhotoImage(image)
         self.image_label.config(image=self.photo)
@@ -131,11 +131,12 @@ class ImageProcessingApp:
 
     # Métodos placeholders para as funcionalidades
     def show_histogram(self):
-        if self.image_array is None:
+        if self.processed_image is None:
             messagebox.showwarning("Aviso", "Carregue uma imagem primeiro!")
             return
+        img_array = np.array(self.processed_image)
         plt.figure(figsize=(9,5))
-        plt.hist(self.image_array.ravel(), bins=256, range=(0,255), color='gray', alpha=0.7)
+        plt.hist(img_array.ravel(), bins=256, range=(0,255), color='gray', alpha=0.7)
         plt.title("Histograma de Imagem")
         plt.xlabel("Intensidade")
         plt.ylabel("Frequência")
@@ -144,127 +145,152 @@ class ImageProcessingApp:
         self.status_label.config(text="Histograma Exibido", bootstyle=INFO)
     
     def contrast_stretching(self):
-        if self.image_array is None:
+        if self.processed_image is None:
             messagebox.showwarning("Aviso", "Carregue uma imagem primeiro!")
             return
-        min_val = np.min(self.image_array)
-        max_val = np.max(self.image_array)
-        stretched = 255 * (self.image_array - min_val) / (max_val - min_val + 1e-6)
-        self.processed_image = Image.fromarray(stretched.astype(np.uint8))
+        img_array = np.array(self.processed_image, dtype=np.float32)
+        min_val = np.min(img_array)
+        max_val = np.max(img_array)
+        stretched = 255 * (img_array - min_val) / (max_val - min_val)
+        stretched = np.clip(stretched, 0, 255)
+        stretched = stretched.astype(np.uint8)
+        self.processed_image = Image.fromarray(stretched)
+        self.image_array = stretched.astype(np.uint8)
         self.display_image(self.processed_image)
         self.status_label.config(text="Alargamento de Contraste aplicado", bootstyle=SUCCESS)
     
     def histogram_equalization(self):
-        if self.image_array is None:
+        if self.processed_image is None:
             messagebox.showwarning("Aviso", "Carregue uma imagem primeiro!")
             return
-        equalized = cv2.equalizeHist(self.image_array)
+        img_array = np.array(self.processed_image)
+        equalized = cv2.equalizeHist(img_array)
         self.processed_image = Image.fromarray(equalized)
+        self.image_array = equalized
         self.display_image(self.processed_image)
         self.status_label.config(text="Equalização de Histograma aplicada", bootstyle=SUCCESS)
         
     def mean_filter(self):
-        if self.image_array is None:
+        if self.processed_image is None:
             messagebox.showwarning("Aviso", "Carregue uma imagem primeiro!")
             return
-        blurred = cv2.blur(self.image_array, (5,5))
+        img_array = np.array(self.processed_image)
+        blurred = cv2.blur(img_array, (5,5))
         self.processed_image = Image.fromarray(blurred)
+        self.image_array = blurred
         self.display_image(self.processed_image)
         self.status_label.config(text="Filtro Média aplicado", bootstyle=SUCCESS)
         
     def median_filter(self):
-        if self.image_array is None:
+        if self.processed_image is None:
             messagebox.showwarning("Aviso", "Carregue uma imagem primeiro!")
             return
-        blurred = cv2.medianBlur(self.image_array, 5)
+        img_array = np.array(self.processed_image)
+        blurred = cv2.medianBlur(img_array, 5)
         self.processed_image = Image.fromarray(blurred)
+        self.image_array = blurred
         self.display_image(self.processed_image)
         self.status_label.config(text="Filtro Mediana aplicado", bootstyle=SUCCESS)
 
     def gaussian_filter(self):
-        if self.image_array is None:
+        if self.processed_image is None:
             messagebox.showwarning("Aviso", "Carregue uma imagem primeiro!")
             return
-        blurred = cv2.GaussianBlur(self.image_array, (5,5), 0)
+        img_array = np.array(self.processed_image)
+        blurred = cv2.GaussianBlur(img_array, (5,5), 0)
         self.processed_image = Image.fromarray(blurred)
+        self.image_array = blurred
         self.display_image(self.processed_image)
         self.status_label.config(text="Filtro Gaussiano aplicado", bootstyle=SUCCESS)
      
     def max_filter(self):
-        if self.image_array is None:
+        if self.processed_image is None:
             messagebox.showwarning("Aviso", "Carregue uma imagem primeiro!")
             return
-        filtered = maximum_filter(self.image_array, size=3)
+        img_array = np.array(self.processed_image)
+        filtered = maximum_filter(img_array, size=3)
         self.processed_image = Image.fromarray(filtered)
+        self.image_array = filtered
         self.display_image(self.processed_image)
         self.status_label.config(text="Filtro Máximo aplicado", bootstyle=SUCCESS)
 
     def min_filter(self):
-        if self.image_array is None:
+        if self.processed_image is None:
             messagebox.showwarning("Aviso", "Carregue uma imagem primeiro!")
             return
-        filtered = minimum_filter(self.image_array,size=3)
+        img_array = np.array(self.processed_image)
+        filtered = minimum_filter(img_array,size=3)
         self.processed_image = Image.fromarray(filtered)
+        self.image_array = filtered
         self.display_image(self.processed_image)
         self.status_label.config(text="Filto Mínimo aplicado", bootstyle=SUCCESS)
       
     def laplacian_filter(self):
-        if self.image_array is None:
+        if self.processed_image is None:
             messagebox.showwarning("Aviso", "Carregue uma imagem primeiro!")
             return
-        laplacian = cv2.Laplacian(self.image_array, cv2.CV_64F)
+        img_array = np.array(self.processed_image)
+        laplacian = cv2.Laplacian(img_array, cv2.CV_64F)
         laplacian = np.uint8(np.absolute(laplacian))
         self.processed_image = Image.fromarray(laplacian)
+        self.image_array = laplacian
         self.display_image(self.processed_image)
         self.status_label.config(text="Filtro Laplaciano aplicado", bootstyle=SUCCESS)      
 
     def roberts_filter(self):
-        if self.image_array is None:
+        if self.processed_image is None:
             messagebox.showwarning("Aviso", "Carregue uma imagem primeiro!")
             return
+        img_array = np.array(self.processed_image)
         kernel_x = np.array([[1, 0], [0, -1]])
         kernel_y = np.array([[0, 1], [-1, 0]])
-        grad_x = cv2.filter2D(self.image_array, -1, kernel_x)
-        grad_y = cv2.filter2D(self.image_array, -1, kernel_y)
+        grad_x = cv2.filter2D(img_array, -1, kernel_x)
+        grad_y = cv2.filter2D(img_array, -1, kernel_y)
         roberts = np.sqrt(grad_x**2 + grad_y**2)
         roberts = np.uint8(roberts)
         self.processed_image = Image.fromarray(roberts)
+        self.image_array = roberts
         self.display_image(self.processed_image)
         self.status_label.config(text="Filtro Roberts aplicado", bootstyle=SUCCESS)
            
     def prewitt_filter(self):
-        if self.image_array is None:
+        if self.processed_image is None:
             messagebox.showwarning("Aviso", "Carregue uma imagem primeiro!")
             return
+        img_array = np.array(self.processed_image)
         kernel_x = np.array([[-1, 0, 1], [-1, 0, 1], [-1, 0, 1]])
         kernel_y = np.array([[-1, -1, -1], [0, 0, 0], [1, 1, 1]])
-        grad_x = cv2.filter2D(self.image_array, -1, kernel_x)
-        grad_y = cv2.filter2D(self.image_array, -1, kernel_y)
+        grad_x = cv2.filter2D(img_array, -1, kernel_x)
+        grad_y = cv2.filter2D(img_array, -1, kernel_y)
         prewitt = np.sqrt(grad_x**2 + grad_y**2)
         prewitt = np.uint8(prewitt)
         self.processed_image = Image.fromarray(prewitt)
+        self.image_array = prewitt
         self.display_image(self.processed_image)
         self.status_label.config(text="Filtro Prewitt aplicado", bootstyle=SUCCESS)    
 
     def sobel_filter(self):
-        if self.image_array is None:
+        if self.processed_image is None:
             messagebox.showwarning("Aviso", "Carregue uma imagem primeiro!")
             return
-        grad_x = cv2.Sobel(self.image_array, cv2.CV_64F, 1, 0, ksize=3)
-        grad_y = cv2.Sobel(self.image_array, cv2.CV_64F, 0, 1, ksize=3)
+        img_array = np.array(self.processed_image)
+        grad_x = cv2.Sobel(img_array, cv2.CV_64F, 1, 0, ksize=3)
+        grad_y = cv2.Sobel(img_array, cv2.CV_64F, 0, 1, ksize=3)
         sobel = np.sqrt(grad_x**2 + grad_y**2)
         sobel = np.uint8(sobel)
         self.processed_image = Image.fromarray(sobel)
+        self.image_array = sobel
         self.display_image(self.processed_image)
         self.status_label.config(text="Filtro Sobel aplicado", bootstyle=SUCCESS)
 
     def low_pass_convolution(self):
-        if self.image_array is None:
+        if self.processed_image is None:
             messagebox.showwarning("Aviso", "Carregue uma imagem primeiro!")
             return
-        f = fft2(self.image_array)
+        img_array = np.array(self.processed_image)
+        f = fft2(img_array)
         fshift = fftshift(f)
-        rows, cols = self.image_array.shape
+        rows, cols = img_array.shape
         crow, ccol = rows // 2, cols // 2
         d = 30
         mask = np.zeros((rows,cols), np.uint8)
@@ -278,17 +304,19 @@ class ImageProcessingApp:
         img_back = np.abs(img_back)
         img_back = np.uint8(img_back)
         self.processed_image = Image.fromarray(img_back)
+        self.image_array = img_back
         self.display_image(self.processed_image)
         self.status_label.config(text="Convolução Passa-Baixa aplicada", bootstyle=SUCCESS)
 
 
     def high_pass_convolution(self):
-        if self.image_array is None:
+        if self.processed_image is None:
             messagebox.showwarning("Aviso", "Carregue uma imagem primeiro!")
             return
-        f = fft2(self.image_array)
+        img_array = np.array(self.processed_image)
+        f = fft2(img_array)
         fshift = fftshift(f)
-        rows, cols = self.image_array.shape
+        rows, cols = img_array.shape
         crow, ccol = rows // 2, cols // 2
         d = 30
         mask = np.ones((rows, cols), np.uint8)
@@ -302,14 +330,16 @@ class ImageProcessingApp:
         img_back = np.abs(img_back)
         img_back = np.uint8(img_back)
         self.processed_image = Image.fromarray(img_back)
+        self.image_array = img_back
         self.display_image(self.processed_image)
         self.status_label.config(text="Convolução Passa-Alta aplicado", bootstyle=SUCCESS)
 
     def fourier_spectrum(self):
-        if self.image_array is None:
+        if self.processed_image is None:
             messagebox.showwarning("Aviso", "Carregue uma imagem primeiro!")
             return
-        f = fft2(self.image_array)
+        img_array = np.array(self.processed_image)
+        f = fft2(img_array)
         fshift = fftshift(f)
         magnitude_spectrum = 20 * np.log(np.abs(fshift) + 1e-6)
         plt.figure(figsize=(8,6))
@@ -320,31 +350,37 @@ class ImageProcessingApp:
         self.status_label.config(text="Espectro de Fourier exibido", bootstyle=INFO)
         
     def erosion(self):
-        if self.image_array is None:
+        if self.processed_image is None:
             messagebox.showwarning("Aviso", "Carregue uma imagem primeiro!")
             return
+        img_array = np.array(self.processed_image)
         kernel = np.ones((3, 3), np.uint8)
-        eroded = cv2.erode(self.image_array, kernel, iterations=5)
+        eroded = cv2.erode(img_array, kernel, iterations=5)
         self.processed_image = Image.fromarray(eroded)
+        self.image_array = eroded
         self.display_image(self.processed_image)
         self.status_label.config(text="Erosão aplicada", bootstyle=SUCCESS)
 
     def dilation(self):
-        if self.image_array is None:
+        if self.processed_image is None:
             messagebox.showwarning("Aviso", "Carregue uma imagem primeiro!")
             return
+        img_array = np.array(self.processed_image)
         kernel = np.ones((3,3), np.uint8)
-        dilated = cv2.dilate(self.image_array, kernel, iterations=5)
+        dilated = cv2.dilate(img_array, kernel, iterations=5)
         self.processed_image = Image.fromarray(dilated)
+        self.image_array = dilated
         self.display_image(self.processed_image)
         self.status_label.config(text="Dilatação aplicada", bootstyle=SUCCESS)    
 
     def otsu_segmentation(self):
-        if self.image_array is None:
+        if self.processed_image is None:
             messagebox.showwarning("Aviso", "Carregue uma imagem primeiro!")
             return
-        _, segmented = cv2.threshold(self.image_array, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+        img_array = np.array(self.processed_image)
+        _, segmented = cv2.threshold(img_array, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
         self.processed_image = Image.fromarray(segmented)
+        self.image_array = segmented
         self.display_image(self.processed_image)
         self.status_label.config(text="Segmentação Otsu aplicada", bootstyle=SUCCESS)
 
