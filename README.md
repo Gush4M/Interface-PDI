@@ -165,7 +165,7 @@ Após configurar o ambiente, siga estas etapas para executar o programa:
 | **Espectro de Fourier**                 | Exibe o espectro de magnitude da Transformada de Fourier.                       |
 | **Morfologia Matemática**               | Erosão e Dilatação com kernel 3x3.                                              |
 | **Segmentação Otsu**                    | Aplica limiarização automática com o método de Otsu.                            |
-| **Interface Gráfica**                   | Estilizada com ttkbootstrap (tema "flatly"), com botões e status.               |
+| **Interface Gráfica**                   | Estilizada com ttkbootstrap (tema "vapor"), com botões e status.               |
 | **Processamento Sequencial**            | Operações são aplicadas à imagem processada anteriormente.                      |
 
 ---
