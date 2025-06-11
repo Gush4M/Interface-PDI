@@ -1,4 +1,4 @@
-# SIN 392 - Projeto de Processamento de Imagens
+# Interface GUI - SIN 392 Processamento Digital de Imagens
 
 ## Descrição
 
@@ -110,7 +110,7 @@ Siga as etapas abaixo para configurar o ambiente necessário para executar o sis
 
 ### 5. Verificar o Arquivo do Projeto
 
-- Certifique-se de que o arquivo `image_processing_gui.py` está presente no diretório do projeto. Este é o arquivo principal que executa o sistema.
+- Certifique-se de que o arquivo `interface_gui.py` está presente no diretório do projeto. Este é o arquivo principal que executa o sistema.
 
 ---
 
@@ -138,7 +138,7 @@ Após configurar o ambiente, siga estas etapas para executar o programa:
 3. **Execute o programa**:
 
    ```bash
-   python image_processing_gui.py
+   python interface_gui.py
    ```
 
 4. **Interaja com o Sistema**:
@@ -172,7 +172,7 @@ Após configurar o ambiente, siga estas etapas para executar o programa:
 
 ## Estrutura do Repositório
 
-- `image_processing_gui.py`: Código principal da aplicação.
+- `interface_gui.py`: Código principal da aplicação.
 - `README.md`: Instruções de configuração e execução.
 
 ---
@@ -182,7 +182,7 @@ Após configurar o ambiente, siga estas etapas para executar o programa:
 1. Execute o programa com:
 
    ```bash
-   python image_processing_gui.py
+   python interface_gui.py
    ```
 
 2. No menu **Arquivo**, selecione **Carregar Imagem** para abrir uma imagem.
