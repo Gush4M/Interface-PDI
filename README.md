@@ -6,6 +6,12 @@ Este projeto é um sistema interativo para edição e análise de imagens, desen
 
 ---
 
+## Link vídeo no Youtube
+
+https://youtu.be/uCYgXGSe7Sg
+
+---
+
 ## Pré-requisitos
 
 Para executar o sistema, você precisará dos seguintes itens:
